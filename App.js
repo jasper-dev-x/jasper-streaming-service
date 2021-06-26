@@ -1,43 +1,72 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Pressable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import Home from './screens/home';
-import Categories from './screens/profile';
-import Search from './screens/search';
+import Profile from './screens/profile';
+import MyStuff from './screens/myStuff';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 function App() {
+  const [movieList, setMovieList] = useState([]);
+
+  // IMDb FETCH
+  // useEffect(() => {
+  //   fetch("https://imdb-api.com/en/API/MostPopularMovies/k_q6k5ttle")
+  //     .then(res => res.json())
+  //     .then(setMovieList)
+  //     .catch((err) => console.error("ERROR IMDB FETCH: ", err));
+  // });
+
   return (
-    <NavigationContainer style={{backgroundColor: 'black'}}>
-      <Tab.Navigator initialRouteName="Home"
+    <NavigationContainer >
+      <Tab.Navigator
+        initialRouteName="Home"
         screenOptions={ ({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             var iconName;
             if (route.name === 'Home')
               iconName = focused ? 'home-sharp' : 'home-outline';
-            else if (route.name === 'Search')
-              iconName = focused ? 'ios-search' : 'search-outline';
-            else if (route.name === 'Categories')
+            else if (route.name === 'MyStuff')
+              iconName = focused ? 'file-tray-full' : 'file-tray-full-outline';
+            else if (route.name === 'Profile')
               iconName = focused ? 'person-sharp' : 'person-outline';
             return <Ionicons name={ iconName } size={ size } color={ color } />;
           }
         }) }
-
         tabBarOptions={ {
           activeTintColor: '#9A182B',
           inactiveTintColor: 'gray',
           showLabel: false,
-          style: {
-            backgroundColor: '#292B2C',
-            border: 0
-          }
+          style: { backgroundColor: '#1A1A1A', border: 0 }
         } }>
-        <Tab.Screen name="Home" component={ Home } />
-        <Tab.Screen name="Search" component={ Search } />
-        <Tab.Screen name="Categories" component={ Categories } />
+
+        {/* HOME SCREEN */ }
+        <Tab.Screen name="Home" >
+          { (props) => <Home { ...props } /> }
+        </Tab.Screen>
+
+        {/* MY STUFF SCREEN */ }
+        <Tab.Screen name="MyStuff" >
+          { (props) =>
+            <>
+              <MyStuff { ...props } />
+            </>
+          }
+        </Tab.Screen>
+
+        {/* PROFILE SCREEN */ }
+        <Tab.Screen name="Profile">
+          { (props) =>
+            <>
+              <Profile { ...props } />
+            </>
+          }
+        </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
   );
