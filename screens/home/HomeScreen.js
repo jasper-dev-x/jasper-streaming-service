@@ -1,28 +1,33 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, Platform, FlatList, ScrollView, Pressable, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Header from '../components/Header';
-import MediaList from './MediaList';
+import MediaList from './components/MediaList';
 import { IMDbData } from '../data/imdbList';
 
 export default function HomeScreen({ navigation }) {
+    const listNames = [
+        { heading: "Keep Watching", mediaList: IMDbData.slice(1, 10) },
+        { heading: "Because you watched...", mediaList: IMDbData.slice(10, 20) },
+        { heading: "Because you watched...", mediaList: IMDbData.slice(20, 30) },
+        { heading: "Because you watched...", mediaList: IMDbData.slice(30, 40) },
+        { heading: "Because you watched...", mediaList: IMDbData.slice(40, 50) },
+        { heading: "Because you watched...", mediaList: IMDbData.slice(50, 60) },
+        { heading: "Because you watched...", mediaList: IMDbData.slice(60, 70) },
+        { heading: "Because you watched...", mediaList: IMDbData.slice(70, 80) },
+    ];
 
     return (
         <LinearGradient style={ { flex: 1 } } colors={ ['#121212', '#9A182B'] } >
-            <Header navigation={ navigation } />
+            <Header navigation={ navigation } icon="search" />
             <View style={ styles.body }>
                 <ScrollView>
-                    <View style={ styles.containerFeatured }>
+                    <Pressable style={ styles.containerFeatured } onPress={ () => navigation.navigate("Media", { item: IMDbData[0] }) }>
                         <Text style={ styles.title }>{ IMDbData[0].title }</Text>
-                    </View>
-                    <MediaList mediaList={ IMDbData.slice(1, 10) } />
-                    <MediaList mediaList={ IMDbData.slice(10, 20) } />
-                    <MediaList mediaList={ IMDbData.slice(20, 30) } />
-                    <MediaList mediaList={ IMDbData.slice(30, 40) } />
-                    <MediaList mediaList={ IMDbData.slice(40, 50) } />
-                    <MediaList mediaList={ IMDbData.slice(50, 60) } />
-                    <MediaList mediaList={ IMDbData.slice(60, 70) } />
-                    <MediaList mediaList={ IMDbData.slice(70, 80) } />
+                    </Pressable>
+                    { listNames.map((item, key) =>
+                        <MediaList key={ key } heading={ item.heading } mediaList={ item.mediaList } navigation={ navigation } />
+                    ) }
                 </ScrollView>
             </View>
         </LinearGradient>

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './HomeScreen';
 import Search from '../search';
+import MediaPage from './components/MediaPage';
 const Stack = createStackNavigator();
 
 export default function Home({ navigation }) {
@@ -15,6 +16,9 @@ export default function Home({ navigation }) {
                 </Stack.Screen>
                 <Stack.Screen name="Search" options={ { headerShown: false } }>
                     { (props) => <Search { ...props } /> }
+                </Stack.Screen>
+                <Stack.Screen name="Media" options={ { headerShown: false } }>
+                    { (props) => <MediaPage { ...props } /> }
                 </Stack.Screen>
             </Stack.Navigator>
         </View>

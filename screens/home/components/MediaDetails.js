@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 
-export default function MediaDetails({ item }) {
+export default function MediaDetails({ item, navigation }) {
 
     return (
-        <View style={ styles.container }>
+        <Pressable style={ styles.container } onPress={ () => navigation.navigate("Media", { item }) }>
             <View style={ styles.mediaImg } />
             <Text style={ styles.title }>{ item.title }</Text>
-        </View>
+        </Pressable>
     );
 }
 

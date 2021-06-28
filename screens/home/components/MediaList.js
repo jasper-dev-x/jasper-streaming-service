@@ -2,15 +2,15 @@ import React from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
 import MediaDetails from './MediaDetails';
 
-export default function MediaList({ mediaList }) {
+export default function MediaList({ mediaList, heading, navigation }) {
 
     return (
         <View style={ styles.container }>
-            <Text style={ styles.title }>Sample Header</Text>
+            <Text style={ styles.title }>{ heading }</Text>
             {/* FLATLIST KEY MUST BE STRING */ }
             <FlatList
                 data={ mediaList }
-                renderItem={ MediaDetails }
+                renderItem={ (props) => <MediaDetails { ...props } navigation={ navigation } /> }
                 keyExtractor={ (item) => item.id }
                 horizontal={ true }
             />

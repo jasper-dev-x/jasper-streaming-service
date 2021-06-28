@@ -1,14 +1,14 @@
 import React from 'react';
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, Pressable } from 'react-native';
 const _Width = Dimensions.get('screen').width;
 
-export default function SearchResult({ item }) {
+export default function SearchResult({ item, navigation }) {
 
     return (
-        <View style={ styles.container }>
+        <Pressable style={ styles.container } onPress={ () => navigation.navigate("Media", { item }) }>
             <View style={ styles.img } />
             <Text style={ styles.title }>{ item.title }</Text>
-        </View>
+        </Pressable>
     );
 }
 
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     img: {
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
         height: _Width * .562,
         width: _Width
     }

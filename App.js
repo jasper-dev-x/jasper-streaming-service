@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import Home from './screens/home';
 import Profile from './screens/profile';
-import MyStuff from './screens/myStuff';
+import Catagories from './screens/catagories';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -31,7 +31,7 @@ function App() {
             var iconName;
             if (route.name === 'Home')
               iconName = focused ? 'home-sharp' : 'home-outline';
-            else if (route.name === 'MyStuff')
+            else if (route.name === 'Catagories')
               iconName = focused ? 'file-tray-full' : 'file-tray-full-outline';
             else if (route.name === 'Profile')
               iconName = focused ? 'person-sharp' : 'person-outline';
@@ -50,22 +50,14 @@ function App() {
           { (props) => <Home { ...props } /> }
         </Tab.Screen>
 
-        {/* MY STUFF SCREEN */ }
-        <Tab.Screen name="MyStuff" >
-          { (props) =>
-            <>
-              <MyStuff { ...props } />
-            </>
-          }
+        {/* CATAGORIES SCREEN */ }
+        <Tab.Screen name="Catagories" >
+          { (props) => <Catagories { ...props } /> }
         </Tab.Screen>
 
         {/* PROFILE SCREEN */ }
         <Tab.Screen name="Profile">
-          { (props) =>
-            <>
-              <Profile { ...props } />
-            </>
-          }
+          { (props) => <Profile { ...props } /> }
         </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>

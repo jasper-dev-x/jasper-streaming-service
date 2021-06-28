@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text, StyleSheet, TextInput, StatusBar, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { IMDbData } from '../data/imdbList';
+import Header from '../components/Header';
 import SearchResult from './components/SearchResult';
 
 export default function Search({ navigation }) {
@@ -16,23 +17,26 @@ export default function Search({ navigation }) {
         <View style={ { flex: 1, backgroundColor: '#121212' } }>
             <View style={ styles.statusBar } />
             <View style={ styles.container }>
-                <View style={ styles.toolbar } >
+                <View style={ styles.header }>
+                    <TextInput
+                        style={ styles.searchBar }
+                        value={ searchInput }
+                        onChangeText={ setSearchInput }
+                        placeholder="Search"
+                        placeholderTextColor="gray"
+                        clearTextOnFocus={ true }
+                    />
+                    <Pressable style={ styles.btn } onPress={ () => setSearchInput('') }>
+                        <Ionicons name="close" size={ 25 } color="gray" />
+                    </Pressable>
                     <Pressable style={ styles.btn } onPress={ () => navigation.goBack() }>
-                        <Ionicons name="chevron-back" size={ 30 } color="#9A182B" />
-                        <Text style={ styles.btnTxt }>Back</Text>
+                        <Ionicons name="arrow-back" size={ 25 } color="gray" />
                     </Pressable>
                 </View>
-                <TextInput
-                    style={ styles.searchBar }
-                    value={ searchInput }
-                    onChangeText={ setSearchInput }
-                    placeholder="Search"
-                    placeholderTextColor="gray"
-                    clearTextOnFocus={ true }
-                />
+
                 <FlatList
                     data={ resultList }
-                    renderItem={ SearchResult }
+                    renderItem={ (props) => <SearchResult { ...props } navigation={ navigation } /> }
                     keyExtractor={ (item) => item.id }
                 />
             </View>
@@ -45,6 +49,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#121212'
     },
+    header: {
+        flexDirection: 'row',
+        paddingVertical: 10
+    },
     statusBar: {
         height: StatusBar.currentHeight,
         backgroundColor: 'rgba(255, 255, 255, 0.3)'
@@ -54,21 +62,20 @@ const styles = StyleSheet.create({
     },
     searchBar: {
         height: 60,
-        paddingStart: 20,
-        margin: 10,
-        color: 'whitesmoke',
+        flex: 1,
+        paddingHorizontal: 30,
+        marginStart: 10,
+        color: '#F7F7F7',
         fontSize: 18,
         borderRadius: 20,
         borderColor: '#121212',
         borderBottomColor: '#9A182B',
-        borderWidth: 3
+        borderWidth: 3,
     },
     btn: {
-        paddingVertical: 10,
-        width: 80,
+        paddingHorizontal: 10,
         borderRadius: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
+        justifyContent: 'center',
     },
     btnTxt: {
         color: '#9A182B'

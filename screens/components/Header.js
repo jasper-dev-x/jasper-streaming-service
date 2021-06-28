@@ -6,14 +6,64 @@ const _Width = Dimensions.get('screen').width;
 const _Height = Dimensions.get('screen').height;
 const imgXY = 50;
 
-export default function Header({ navigation }) {
+export default function Header({ navigation, screenName, icon }) {
 
+    // HEADER WITH LOGO & SEARCH
+    if (!screenName) {
+        return (
+            <View style={ { flex: 1, backgroundColor: 'rgba(255, 255, 255, 0.5)' } }>
+                <View style={ styles.statusBar } />
+                <View style={ [styles.container, { backgroundColor: '#121212' }] }>
+                    <View style={ { justifyContent: 'center' } }>
+                        <Image source={ LOGO } style={ styles.img } />
+                    </View>
+                    <Pressable style={ styles.btn } onPress={ () => navigation.navigate("Search") }>
+                        <Ionicons name={ icon } size={ imgXY / 2 } color="gray" />
+                    </Pressable>
+                </View>
+            </View>
+        );
+    }
+
+    // HEADER WITH TITLE  
+    if (!icon) {
+        return (
+            <View style={ { flex: 1 } }>
+                <View style={ styles.statusBar } />
+                <View style={ [styles.container, { alignItems: 'center' }] }>
+                    <Text style={ styles.title }>{ screenName }</Text>
+                </View>
+            </View>
+        );
+    }
+
+    // HEADER WITH TITLE & BACK 
+    if (icon === 'arrow-back') {
+        return (
+            <View style={ { flex: 1 } }>
+                <View style={ styles.statusBar } />
+                <View style={ styles.container }>
+                    <View style={ { justifyContent: 'center' } }>
+                        <Text style={ styles.title }>{ screenName }</Text>
+                    </View>
+                    <Pressable style={ styles.btn } onPress={ () => navigation.goBack() }>
+                        <Ionicons name={ icon } size={ imgXY / 2 } color="gray" />
+                    </Pressable>
+                </View>
+            </View>
+        );
+    }
+
+    // HEADER WITH TITLE & SETTINGS
     return (
-        <View style={ { flex: 1, backgroundColor: 'rgba(255, 255, 255, 0.5)' } }>
+        <View style={ { flex: 1 } }>
+            <View style={ styles.statusBar } />
             <View style={ styles.container }>
-                <Image source={ LOGO } style={ styles.img } />
-                <Pressable style={ styles.btn } onPress={ () => navigation.navigate("Search") }>
-                    <Ionicons name="search" size={ imgXY / 2 } color="gray" />
+                <View style={ { justifyContent: 'center' } }>
+                    <Text style={ styles.title }>{ screenName }</Text>
+                </View>
+                <Pressable style={ styles.btn } onPress={ () => navigation.navigate("Settings") }>
+                    <Ionicons name={ icon } size={ imgXY / 2 } color="#F7F7F7" />
                 </Pressable>
             </View>
         </View>
@@ -24,24 +74,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: '#121212',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingStart: 10,
-        paddingEnd: 15,
-        elevation: 30,
-        marginTop: StatusBar.currentHeight
+        paddingStart: 15
     },
     title: {
-        color: '#9A182B',
-        fontSize: 36
+        color: '#F7F7F7',
+        fontSize: 26
+    },
+    statusBar: {
+        height: StatusBar.currentHeight,
+        backgroundColor: 'rgba(255, 255, 255, 0.3)'
     },
     img: {
         width: imgXY,
-        height: imgXY
+        height: imgXY,
     },
     btn: {
-        padding: 5,
         borderRadius: 10,
+        paddingHorizontal: 15,
+        justifyContent: 'center'
     }
 });
